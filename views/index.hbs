@@ -1,0 +1,84 @@
+	<form action="/create" method="POST">
+		<div class="todo-content">
+			<h1 class="todo-content__title">Все задачи</h1>
+			<div class="todo-new-task">
+				<input type="text" class='todo__input' placeholder="Новая задача" name="title">
+				<input type="submit" class="todo__submit_add" value="Добавить">
+			</div>
+		</div>
+		<div class='container'>
+		</div>
+	</form>
+
+	{{#if todos.length}}
+
+		{{#each todos}}
+				{{#if edited}}
+				<div class="container">
+					<div class="todo__list">
+						<form action="/save" method="POST">
+							<div class="todo__task">
+								<div class="todo__checkbox">
+									<input type="text" class='todo__input' placeholder=" {{ title }}" name="title">
+								</div>
+							</div>
+							<div class="todo__actions">
+									<input type="hidden" value="{{_id}}" name="id">
+									<button class="todo__edit">save</button>	
+							</div>
+						</form>
+						<div class="todo__actions">
+							<form action="/return" method="POST">
+								<input type="hidden" value="{{_id}}" name="id">
+								<button class="todo__save">return</button>
+							</form>
+						</div>
+					</div>
+				</div>
+				{{else if completed}}
+				<div class="container">
+					<div class="todo__list">
+						<form action="/complete" method="POST">
+							<div class="todo__task">
+								<div class="todo__checkbox">
+									<input type="checkbox" checked name="completed">
+									<span class="completed">{{ title }}</span>
+								</div>
+							</div>
+							<div class="todo__actions">
+								<input type="hidden" value="{{_id}}" name="id">
+								<button class="todo__save">save</button>
+							</div>
+						</form>
+				{{else}}
+				<div class="container">
+					<div class="todo__list">
+						<form action="/complete" method="POST">
+							<div class="todo__task">
+								<div class="todo__checkbox">
+									<input type="checkbox" name="completed">
+									<span class="todo__input-task">{{ title }}</span>
+								</div>
+							</div>
+							<div class="todo__actions">
+								<input type="hidden" value="{{_id}}" name="id">
+								<button class="todo__save">save</button>
+							</div>
+						</form>
+				{{/if}}
+				<div class="todo__actions">
+							<form action="/edit" method="POST">
+								<input type="hidden" value="{{_id}}" name="id">
+								<button class="todo__edit">edit</button>	
+							</form>
+							<form action="/delete" method="POST">
+								<input type="hidden" value="{{_id}}" name="id">
+								<button class="todo__delete">delete</button>	
+							</form>
+						</div>
+					</div>
+				</div>
+		{{/each}}
+	{{else}}
+	<p>No todos</p>
+	{{/if}}
